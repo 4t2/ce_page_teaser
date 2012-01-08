@@ -67,15 +67,22 @@ class ArticlePageTeaser extends ContentTeaser
 			$link = $this->generateFrontendUrl($objArticle->row());
 
 			$this->import('String');
-	
-			// Clean the RTE output
-			if ($objPage->outputFormat == 'xhtml')
+
+			if (version_compare(VERSION, '2.9', '>'))
 			{
-				$articleTeaser = $this->String->toXhtml($objArticle->teaser);
+				// Clean the RTE output
+				if ($objPage->outputFormat == 'xhtml')
+				{
+					$articleTeaser = $this->String->toXhtml($objArticle->teaser);
+				}
+				else
+				{
+					$articleTeaser = $this->String->toHtml5($objArticle->teaser);
+				}
 			}
 			else
 			{
-				$articleTeaser = $this->String->toHtml5($objArticle->teaser);
+				$articleTeaser = $objArticle->teaser;
 			}
 
 			if ($this->teaser_fragment_identifier)

@@ -80,14 +80,17 @@ class PageTeaser extends ContentElement
 
 		$this->import('String');
 
-		// Clean the RTE output
-		if ($objPage->outputFormat == 'xhtml')
-		{
-			$this->text = $this->String->toXhtml($this->text);
-		}
-		else
-		{
-			$this->text = $this->String->toHtml5($this->text);
+		if (version_compare(VERSION, '2.9', '>'))
+		{	
+			// Clean the RTE output
+			if ($objPage->outputFormat == 'xhtml')
+			{
+				$this->text = $this->String->toXhtml($this->text);
+			}
+			else
+			{
+				$this->text = $this->String->toHtml5($this->text);
+			}
 		}
 
 		$this->Template->href = $link;
