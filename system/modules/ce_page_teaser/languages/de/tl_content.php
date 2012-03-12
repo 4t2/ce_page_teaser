@@ -21,7 +21,7 @@
  * Software Foundation website at <http://www.gnu.org/licenses/>.
  *
  * PHP version 5
- * @copyright  Lingo4you 2011
+ * @copyright  Lingo4you 2012
  * @author     Mario Müller <http://www.lingo4u.de/>
  * @package    PageTeaser
  * @license    http://opensource.org/licenses/lgpl-3.0.html

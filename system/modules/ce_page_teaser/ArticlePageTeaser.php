@@ -63,7 +63,7 @@ class ArticlePageTeaser extends ContentTeaser
 			{
 				return;
 			}
-			
+
 			$link = $this->generateFrontendUrl($objArticle->row());
 
 			$this->import('String');

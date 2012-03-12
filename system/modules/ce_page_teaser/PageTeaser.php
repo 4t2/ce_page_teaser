@@ -35,6 +35,40 @@ class PageTeaser extends ContentElement
 	 * @var string
 	 */
 	protected $strTemplate = 'ce_page_teaser';
+	protected $pageCode = 0;
+	protected $pageLink = '';
+
+
+	/**
+	 * Parse the template
+	 * @return string
+	 */
+	public function generate()
+	{
+		if (TL_MODE == 'BE')
+		{
+			$strContent = parent::generate();
+			
+			if ($this->pageCode < 0)
+			{
+				$strContent = '<div style="color:#a22;font-weight:bold;">→ '.$this->pageLink.'</div>' . $strContent;
+			}
+			elseif ($this->pageCode > 0)
+			{
+				$strContent = '<div style="color:#22a">→ '.$this->pageLink.'</div>' . $strContent;
+			}
+			else
+			{
+				$strContent = '<div>→ '.$this->pageLink.'</div>' . $strContent;
+			}
+
+			return $strContent;
+		}
+		else
+		{
+			return parent::generate();
+		}
+	}
 
 
 	/**
@@ -42,7 +76,28 @@ class PageTeaser extends ContentElement
 	 */
 	protected function compile()
 	{
-		global $objPage;
+		if (TL_MODE == 'FE')
+		{
+			global $objPage;
+		}
+		else
+		{
+			$objArticle = $this->Database->prepare("SELECT `pid` FROM `tl_article` WHERE `id`=?")->execute($this->pid);
+
+			if ($objArticle->next())
+			{
+				$objPage = $this->Database->prepare("SELECT * FROM `tl_page` WHERE `id`=?")->execute($objArticle->pid)->next();
+			}	
+		}
+
+		$rootPage = $this->getRootPage($objPage->id);
+		
+		if (TL_MODE == 'BE')
+		{
+			$objPage->domain = $rootPage['dns'];
+			$objPage->rootLanguage = $rootPage['language'];
+		}
+		
 
 		$objTargetPage = $this->Database->prepare("
 			SELECT
@@ -57,26 +112,44 @@ class PageTeaser extends ContentElement
 			->limit(1)
 			->execute($this->page_teaser_page);
 
-		if ($objTargetPage->numRows < 1)
-		{
-			return;
-		}
-		
-		$targetId = $objTargetPage->id;
 		$link = '';
 
-		if ($targetRoot = $this->getRootPage($objTargetPage->id))
+		if ($objTargetPage->numRows < 1)
 		{
-			if ($objPage->domain != $targetRoot['dns'])
+			$this->pageCode = -1;
+			$this->pageLink = sprintf($GLOBALS['TL_LANG']['page_teaser']['not_found'], $this->page_teaser_page);
+		}
+		else
+		{
+			$targetId = $objTargetPage->id;
+	
+			if ($targetRoot = $this->getRootPage($objTargetPage->id))
 			{
-				$link = 'http://' . $targetRoot['dns'] . '/';
+				if ($objPage->domain != $targetRoot['dns'])
+				{
+					$link = ($this->Environment->ssl ? 'https://' : 'http://') . $targetRoot['dns'] . '/';
+				}
+
+				if ($rootPage['id'] != $targetRoot['id'])
+				{
+					$this->pageCode = 1;
+				}
 			}
+			
+			if ($objTargetPage->type != 'root')
+			{
+				if (version_compare(VERSION, '2.10', '>'))
+				{
+					$link .= $this->generateFrontendUrl($objTargetPage->row(), null, $targetRoot['language']);
+				}
+				else
+				{
+					$link .= $this->generateFrontendUrl($objTargetPage->row());
+				}
+			}	
 		}
-		
-		if ($objTargetPage->type != 'root')
-		{
-			$link .= $this->generateFrontendUrl($objTargetPage->row());
-		}
+
+		$this->pageLink = $link;
 
 		$this->import('String');
 

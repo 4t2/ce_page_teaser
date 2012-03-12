@@ -34,4 +34,6 @@
  */
 $GLOBALS['TL_LANG']['CTE']['page_teaser'] = array('Page teaser', 'Page teaser with link to a site.');
 
+$GLOBALS['TL_LANG']['page_teaser']['not_found'] = 'Page %s not found';
+
 ?>
