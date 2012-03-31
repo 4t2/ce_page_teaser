@@ -9,4 +9,6 @@ Seitenteaser erweitert das Contao-Inhaltselement *Artikelteaser* mit der zusätz
 Seitenteaser
 ------------
 
-Zusätzlich wird noch das eigene Inhaltselement **Seitenteaser** zur Verfügung gestellt, mit welchem direkt Seiten ausgewählt und mit einem eigenen Teasertext, Überschrift und Bild verlinkt werden können. Dies funktioniert auch über Seitenwurzeln mit verschiedenen Domains hinweg.
+Zusätzlich wird noch das eigene Inhaltselement **Seitenteaser** zur Verfügung gestellt, mit welchem direkt Seiten ausgewählt und mit einem eigenen Teasertext, Überschrift und Bild verlinkt werden können. Diese Art eines Teaser bietet für Editoren den Vorteil, dass der Teasertext damit an der Stelle bearbeitet werden kann, wo er auch erscheint. Dies funktioniert auch über Seitenwurzeln mit verschiedenen Domains hinweg.
+
+Für den Seitenteaser kann in den Frontend-Einstellungen die Option „Teaser komplett verlinken“ aktiviert werden. Damit wird der komplette Teaser inkl. Bild und Text anklickbar.

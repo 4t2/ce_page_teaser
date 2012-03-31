@@ -21,7 +21,7 @@
  * Software Foundation website at <http://www.gnu.org/licenses/>.
  *
  * PHP version 5
- * @copyright  Lingo4you 2011
+ * @copyright  Lingo4you 2012
  * @author     Mario Müller <http://www.lingo4u.de/>
  * @package    PageTeaser
  * @license    http://opensource.org/licenses/lgpl-3.0.html
@@ -45,7 +45,7 @@ class PageTeaser extends ContentElement
 	 */
 	public function generate()
 	{
-		if (TL_MODE == 'BE')
+		if (TL_MODE == 'BE' && !defined('EX_TL_MODE_FE'))
 		{
 			$strContent = parent::generate();
 			
@@ -66,6 +66,12 @@ class PageTeaser extends ContentElement
 		}
 		else
 		{
+			if (!empty($GLOBALS['TL_CONFIG']['pageTeaserJsLink']) && !defined('PAGE_TEASER_JS_LINK'))
+			{
+				$GLOBALS['TL_JAVASCRIPT'][] = 'system/modules/ce_page_teaser/html/js/page_teaser.js';
+				define('PAGE_TEASER_JS_LINK', 1);
+			}
+
 			return parent::generate();
 		}
 	}
@@ -76,7 +82,7 @@ class PageTeaser extends ContentElement
 	 */
 	protected function compile()
 	{
-		if (TL_MODE == 'FE')
+		if (TL_MODE == 'FE' || defined('EX_TL_MODE_FE'))
 		{
 			global $objPage;
 		}
@@ -92,7 +98,7 @@ class PageTeaser extends ContentElement
 
 		$rootPage = $this->getRootPage($objPage->id);
 		
-		if (TL_MODE == 'BE')
+		if (TL_MODE == 'BE' && !defined('EX_TL_MODE_FE'))
 		{
 			$objPage->domain = $rootPage['dns'];
 			$objPage->rootLanguage = $rootPage['language'];
@@ -210,5 +216,3 @@ class PageTeaser extends ContentElement
 	}
 
 }
-
-?>

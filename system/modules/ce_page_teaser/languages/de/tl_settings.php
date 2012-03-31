@@ -26,15 +26,5 @@
  * @package    PageTeaser
  * @license    http://opensource.org/licenses/lgpl-3.0.html
  */
-
-$GLOBALS['TL_LANG']['tl_content']['teaser_page_link'] = array('auf Seite verlinken', 'Auf übergeordnete Seite des Artikels verlinken.');
-$GLOBALS['TL_LANG']['tl_content']['teaser_fragment_identifier'] = array('Anker setzen', 'Anker zur ID des Artikels setzen.');
-
-
-$GLOBALS['TL_LANG']['tl_content']['page_teaser_text_legend'] = 'Teaser';
-$GLOBALS['TL_LANG']['tl_content']['page_teaser_page_legend'] = 'Seite';
-
-
-$GLOBALS['TL_LANG']['tl_content']['page_teaser_text'] = array('Teasertext', 'Teasertext zu der verlinkten Seite.');
-$GLOBALS['TL_LANG']['tl_content']['page_teaser_page'] = array('Seitenziel', 'Zu verlinkende Seite auswählen.');
-$GLOBALS['TL_LANG']['tl_content']['page_teaser_show_more'] = array('Weiterlesen-Link anzeigen', 'Gibt an, ob der Weiterlesen-Link anzeigt werden soll.');
+ 
+ $GLOBALS['TL_LANG']['tl_settings']['pageTeaserJsLink'] = array('Teaser komplett verlinken', 'Der komplette Teaser wird mittels JavaScript/MooTools anklickbar.');

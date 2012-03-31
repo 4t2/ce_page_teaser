@@ -52,8 +52,6 @@ $GLOBALS['TL_DCA']['tl_content']['fields']['teaser_fragment_identifier'] = array
 	'eval'			=> array('tl_class'=>'w50')
 );
 
-
-
 $GLOBALS['TL_DCA']['tl_content']['fields']['page_teaser_page'] = array
 (
 	'label'                   => &$GLOBALS['TL_LANG']['tl_content']['page_teaser_page'],
@@ -64,20 +62,7 @@ $GLOBALS['TL_DCA']['tl_content']['fields']['page_teaser_page'] = array
 		'fieldType'=>'radio'
 	)
 );
-/*
-$GLOBALS['TL_DCA']['tl_content']['fields']['page_teaser_text'] = array
-(
-	'label'                   => &$GLOBALS['TL_LANG']['tl_content']['page_teaser_text'],
-	'exclude'                 => true,
-	'search'                  => true,
-	'inputType'               => 'textarea',
-	'explanation'             => 'insertTags',
-	'eval'                    => array(
-		'mandatory' => false,
-		'rte' => 'tinyMCE'
-	)
-);
-*/
+
 $GLOBALS['TL_DCA']['tl_content']['fields']['page_teaser_show_more'] = array
 (
 	'label'			=> &$GLOBALS['TL_LANG']['tl_content']['page_teaser_show_more'],
@@ -85,5 +70,3 @@ $GLOBALS['TL_DCA']['tl_content']['fields']['page_teaser_show_more'] = array
 	'inputType'		=> 'checkbox',
 	'eval'			=> array('tl_class'=>'w50')
 );
-
-
