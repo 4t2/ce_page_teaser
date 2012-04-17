@@ -1,16 +1,11 @@
 window.addEvent('domready', function() {
-
-	$$('.ce_page_teaser').each(setTeaserLink);
-	$$('.ce_teaser').each(setTeaserLink);
-
-	function setTeaserLink(element, index)
-	{
-		element.setStyles({'cursor' : 'pointer'});
-
-		element.addEvent('click', function(e)
+	$$('.ce_teaser, .ce_page_teaser')
+		.setStyles({'cursor' : 'pointer'})
+		.addEvent('click', function(e)
 		{
-			(new URI(this.getElement('a').get('href'))).go();
+			if (!this.hasClass('fee_editable'))
+			{
+				(new URI(this.getElement('a').get('href'))).go();
+			}
 		});
-	}
-
 });
