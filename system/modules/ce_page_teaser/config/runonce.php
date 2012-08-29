@@ -1,4 +1,4 @@
-<?php
+<?php if (!defined('TL_ROOT')) die('You cannot access this file directly!');
 
 class TeaserRunonceJob extends Controller
 {
@@ -24,5 +24,3 @@ class TeaserRunonceJob extends Controller
 
 $objTeaserRunonceJob = new TeaserRunonceJob();
 $objTeaserRunonceJob->run();
-
-?>
