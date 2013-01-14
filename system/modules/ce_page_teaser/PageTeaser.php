@@ -21,8 +21,8 @@
  * Software Foundation website at <http://www.gnu.org/licenses/>.
  *
  * PHP version 5
- * @copyright  Lingo4you 2012
- * @author     Mario Müller <http://www.lingo4u.de/>
+ * @copyright  Lingo4you 2013
+ * @author     Mario Müller <http://www.lingolia.com/>
  * @package    PageTeaser
  * @license    http://opensource.org/licenses/lgpl-3.0.html
  */
@@ -168,7 +168,7 @@ class PageTeaser extends ContentElement
 		$this->import('String');
 
 		if (version_compare(VERSION, '2.9', '>'))
-		{	
+		{
 			// Clean the RTE output
 			if ($objPage->outputFormat == 'xhtml')
 			{
@@ -180,19 +180,50 @@ class PageTeaser extends ContentElement
 			}
 		}
 
+		// Add the static files URL to images
+		if (TL_FILES_URL != '')
+		{
+			$path = $GLOBALS['TL_CONFIG']['uploadPath'] . '/';
+			$this->text = str_replace(' src="' . $path, ' src="' . TL_FILES_URL . $path, $this->text);
+		}
+
 		$this->Template->href = $link;
 		$this->Template->headline = $this->headline;
 		$this->Template->text = $this->text;
 		$this->Template->showMore = $this->page_teaser_show_more;		
 		$this->Template->readMore = specialchars(sprintf($GLOBALS['TL_LANG']['MSC']['readMore'], $objTargetPage->title));
 		$this->Template->more = $GLOBALS['TL_LANG']['MSC']['more'];
-		
+
 		$this->Template->addImage = false;
 
-		// Add image
-		if ($this->addImage && strlen($this->singleSRC) && is_file(TL_ROOT . '/' . $this->singleSRC))
+		if (version_compare(VERSION, '3', '>='))
 		{
-			$this->addImageToTemplate($this->Template, $this->arrData);
+			// Add an image
+			if ($this->addImage && $this->singleSRC != '')
+			{
+				if (!is_numeric($this->singleSRC))
+				{
+					$this->Template->text = '<p class="error">'.$GLOBALS['TL_LANG']['ERR']['version2format'].'</p>';
+				}
+				else
+				{
+					$objModel = \FilesModel::findByPk($this->singleSRC);
+	
+					if ($objModel !== null && is_file(TL_ROOT . '/' . $objModel->path))
+					{
+						$this->singleSRC = $objModel->path;
+						$this->addImageToTemplate($this->Template, $this->arrData);
+					}
+				}
+			}
+		}
+		else
+		{
+			// Add image
+			if ($this->addImage && strlen($this->singleSRC) && is_file(TL_ROOT . '/' . $this->singleSRC))
+			{
+				$this->addImageToTemplate($this->Template, $this->arrData);
+			}
 		}
 	}
 

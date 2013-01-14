@@ -20,11 +20,11 @@
  * License along with this program. If not, please visit the Free
  * Software Foundation website at <http://www.gnu.org/licenses/>.
  *
-* PHP version 5
-* @copyright  Lingo4you 2012
-* @author     Mario Müller <http://www.lingo4u.de/>
-* @package    PageTeaser
-* @license    http://opensource.org/licenses/lgpl-3.0.html
+ * PHP version 5
+ * @copyright  Lingo4you
+ * @author     Mario Müller <http://www.lingolia.com/>
+ * @package    PageTeaser
+ * @license    http://opensource.org/licenses/lgpl-3.0.html
  */
 
 /**

@@ -21,8 +21,8 @@
  * Software Foundation website at <http://www.gnu.org/licenses/>.
  *
  * PHP version 5
- * @copyright  Lingo4you 2012
- * @author     Mario Müller <http://www.lingo4u.de/>
+ * @copyright  Lingo4you
+ * @author     Mario Müller <http://www.lingolia.com/>
  * @package    PageTeaser
  * @license    http://opensource.org/licenses/lgpl-3.0.html
  */
@@ -37,4 +37,4 @@ $GLOBALS['TL_LANG']['tl_content']['page_teaser_page_legend'] = 'Seite';
 
 $GLOBALS['TL_LANG']['tl_content']['page_teaser_text'] = array('Teasertext', 'Teasertext zu der verlinkten Seite.');
 $GLOBALS['TL_LANG']['tl_content']['page_teaser_page'] = array('Seitenziel', 'Zu verlinkende Seite auswählen.');
-$GLOBALS['TL_LANG']['tl_content']['page_teaser_show_more'] = array('Weiterlesen-Link anzeigen', 'Gibt an, ob der Weiterlesen-Link anzeigt werden soll.');
+$GLOBALS['TL_LANG']['tl_content']['page_teaser_show_more'] = array('Weiterlesen-Link anzeigen', 'Weiterlesen-Link unter dem Teasertext anzeigen.');
