@@ -68,14 +68,7 @@ class PageTeaser extends ContentElement
 		{
 			if (!empty($GLOBALS['TL_CONFIG']['pageTeaserJsLink']) && !defined('PAGE_TEASER_JS_LINK'))
 			{
-				if (version_compare(VERSION, '3', '>='))
-				{
-					$GLOBALS['TL_JAVASCRIPT'][] = 'system/modules/ce_page_teaser/assets/scripts/page_teaser.js|static';
-				}
-				else
-				{
-					$GLOBALS['TL_JAVASCRIPT'][] = 'system/modules/ce_page_teaser/assets/scripts/page_teaser.js';
-				}
+				$GLOBALS['TL_JAVASCRIPT'][] = 'system/modules/ce_page_teaser/assets/scripts/moo_page_teaser.js';
 
 				define('PAGE_TEASER_JS_LINK', 1);
 			}
