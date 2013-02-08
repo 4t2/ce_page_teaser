@@ -1,6 +1,6 @@
-window.addEvent('domready', function()
+(function($)
 {
-	(function($)
+	window.addEvent('domready', function()
 	{
 		$$('.ce_teaser, .ce_page_teaser')
 			.setStyles({'cursor' : 'pointer'})
@@ -11,6 +11,5 @@ window.addEvent('domready', function()
 					(new URI(this.getElement('a').get('href'))).go();
 				}
 			});
-	}
-	)(document.id);
-});
+	});
+})(document.id);
