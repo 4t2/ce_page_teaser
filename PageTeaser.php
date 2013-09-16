@@ -68,7 +68,7 @@ class PageTeaser extends ContentElement
 		{
 			if (!empty($GLOBALS['TL_CONFIG']['pageTeaserJsLink']) && !defined('PAGE_TEASER_JS_LINK'))
 			{
-				$GLOBALS['TL_JAVASCRIPT'][] = 'system/modules/ce_page_teaser/assets/scripts/moo_page_teaser.js';
+				$GLOBALS['TL_JAVASCRIPT'][] = 'system/modules/ce_page_teaser/assets/scripts/page_teaser.js';
 
 				define('PAGE_TEASER_JS_LINK', 1);
 			}
@@ -104,7 +104,6 @@ class PageTeaser extends ContentElement
 			$objPage->domain = $rootPage['dns'];
 			$objPage->rootLanguage = $rootPage['language'];
 		}
-		
 
 		$objTargetPage = $this->Database->prepare("
 			SELECT
@@ -179,6 +178,8 @@ class PageTeaser extends ContentElement
 			$path = $GLOBALS['TL_CONFIG']['uploadPath'] . '/';
 			$this->text = str_replace(' src="' . $path, ' src="' . TL_FILES_URL . $path, $this->text);
 		}
+
+		$this->cssID = array($this->cssID[0], $this->cssID[1].(PAGE_TEASER_JS_LINK == 1 ?' ce_teaser_link':''));
 
 		$this->Template->href = $link;
 		$this->Template->headline = $this->headline;
