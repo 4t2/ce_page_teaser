@@ -73,7 +73,16 @@ class PageTeaser extends ContentElement
 				define('PAGE_TEASER_JS_LINK', 1);
 			}
 
-			return parent::generate();
+			$strContent = parent::generate();
+			
+			if ($this->pageCode > -1)
+			{
+				return $strContent;
+			}
+			else
+			{
+				return '';
+			}
 		}
 	}
 
@@ -112,8 +121,9 @@ class PageTeaser extends ContentElement
 				`title`,
 				`type`
 			FROM
-				tl_page
+				`tl_page`
 			WHERE
+				" . (!$this->Input->cookie('FE_PREVIEW') ? "`published`='1' AND " : "") . "
 				`id`=?")
 			->limit(1)
 			->execute($this->page_teaser_page);
@@ -128,7 +138,7 @@ class PageTeaser extends ContentElement
 		else
 		{
 			$targetId = $objTargetPage->id;
-	
+
 			if ($targetRoot = $this->getRootPage($objTargetPage->id))
 			{
 				if ($objPage->domain != $targetRoot['dns'])
@@ -141,10 +151,10 @@ class PageTeaser extends ContentElement
 					$this->pageCode = 1;
 				}
 			}
-			
+
 			if ($objTargetPage->type != 'root')
 			{
-				if (version_compare(VERSION, '2.10', '>'))
+				if (version_compare(VERSION, '2.10', '>') && $GLOBALS['TL_CONFIG']['addLanguageToUrl'])
 				{
 					$link .= $this->generateFrontendUrl($objTargetPage->row(), null, $targetRoot['language']);
 				}
