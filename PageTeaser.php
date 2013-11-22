@@ -123,7 +123,7 @@ class PageTeaser extends ContentElement
 			FROM
 				`tl_page`
 			WHERE
-				" . (!$this->Input->cookie('FE_PREVIEW') ? "`published`='1' AND " : "") . "
+				" . ((!$this->Input->cookie('FE_PREVIEW') && TL_MODE == 'FE') ? "`published`='1' AND " : "") . "
 				`id`=?")
 			->limit(1)
 			->execute($this->page_teaser_page);
@@ -200,33 +200,32 @@ class PageTeaser extends ContentElement
 
 		$this->Template->addImage = false;
 
-		if (version_compare(VERSION, '3', '>='))
+		// Add an image
+		if ($this->addImage && $this->singleSRC != '')
 		{
-			// Add an image
-			if ($this->addImage && $this->singleSRC != '')
+			if (version_compare(VERSION, '3', '>='))
 			{
-				if (!is_numeric($this->singleSRC))
+				if (version_compare(VERSION, '3.2', '>='))
 				{
-					$this->Template->text = '<p class="error">'.$GLOBALS['TL_LANG']['ERR']['version2format'].'</p>';
+					$objModel = \FilesModel::findByUuid($this->singleSRC);
 				}
 				else
 				{
 					$objModel = \FilesModel::findByPk($this->singleSRC);
-	
-					if ($objModel !== null && is_file(TL_ROOT . '/' . $objModel->path))
-					{
-						$this->singleSRC = $objModel->path;
-						$this->addImageToTemplate($this->Template, $this->arrData);
-					}
+				}
+
+				if ($objModel !== null && is_file(TL_ROOT . '/' . $objModel->path))
+				{
+					$this->singleSRC = $objModel->path;
+					$this->addImageToTemplate($this->Template, $this->arrData);
 				}
 			}
-		}
-		else
-		{
-			// Add image
-			if ($this->addImage && strlen($this->singleSRC) && is_file(TL_ROOT . '/' . $this->singleSRC))
+			else
 			{
-				$this->addImageToTemplate($this->Template, $this->arrData);
+				if ($this->addImage && strlen($this->singleSRC) && is_file(TL_ROOT . '/' . $this->singleSRC))
+				{
+					$this->addImageToTemplate($this->Template, $this->arrData);
+				}
 			}
 		}
 	}
