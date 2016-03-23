@@ -30,7 +30,7 @@
 
 $GLOBALS['TL_DCA']['tl_content']['palettes']['teaser'] = str_replace('{include_legend},article', '{include_legend},article,teaser_page_link,teaser_fragment_identifier', $GLOBALS['TL_DCA']['tl_content']['palettes']['teaser']);
 
-$GLOBALS['TL_DCA']['tl_content']['palettes']['page_teaser'] = '{type_legend},type,headline;{page_teaser_text_legend},text;{page_teaser_page_legend},page_teaser_page,page_teaser_show_more;{image_legend},addImage;{expert_legend:hide},cssID,space';
+$GLOBALS['TL_DCA']['tl_content']['palettes']['page_teaser'] = '{type_legend},type,headline;{page_teaser_text_legend},text;{page_teaser_page_legend},page_teaser_page,page_teaser_show_more;{image_legend},addImage;{expert_legend:hide},cssID,space;{invisible_legend:hide},invisible,start,stop';
 
 #$GLOBALS['TL_DCA']['tl_content']['config']['oncopy_callback'][] = array('page_teaser', 'copyTeaser');
 $GLOBALS['TL_DCA']['tl_page']['config']['oncopy_callback'][] = array('page_teaser', 'copyPage');

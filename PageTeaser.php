@@ -68,7 +68,7 @@ class PageTeaser extends ContentElement
 		{
 			if (!empty($GLOBALS['TL_CONFIG']['pageTeaserJsLink']) && !defined('PAGE_TEASER_JS_LINK'))
 			{
-				$GLOBALS['TL_JAVASCRIPT'][] = 'system/modules/ce_page_teaser/assets/scripts/page_teaser.js';
+				$GLOBALS['TL_JAVASCRIPT'][] = 'system/modules/ce_page_teaser/assets/scripts/page_teaser.js|static';
 
 				define('PAGE_TEASER_JS_LINK', 1);
 			}
@@ -98,11 +98,11 @@ class PageTeaser extends ContentElement
 		}
 		else
 		{
-			$objArticle = $this->Database->prepare("SELECT `pid` FROM `tl_article` WHERE `id`=?")->execute($this->pid);
+			$objArticle = \Database::getInstance()->prepare("SELECT `pid` FROM `tl_article` WHERE `id`=?")->execute($this->pid);
 
 			if ($objArticle->next())
 			{
-				$objPage = $this->Database->prepare("SELECT * FROM `tl_page` WHERE `id`=?")->execute($objArticle->pid)->next();
+				$objPage = \Database::getInstance()->prepare("SELECT * FROM `tl_page` WHERE `id`=?")->execute($objArticle->pid)->next();
 			}	
 		}
 
@@ -114,7 +114,7 @@ class PageTeaser extends ContentElement
 			$objPage->rootLanguage = $rootPage['language'];
 		}
 
-		$objTargetPage = $this->Database->prepare("
+		$objTargetPage = \Database::getInstance()->prepare("
 			SELECT
 				`id`,
 				`alias`,
@@ -123,7 +123,7 @@ class PageTeaser extends ContentElement
 			FROM
 				`tl_page`
 			WHERE
-				" . ((!$this->Input->cookie('FE_PREVIEW') && TL_MODE == 'FE') ? "`published`='1' AND " : "") . "
+				" . ((!\Input::cookie('FE_PREVIEW') && TL_MODE == 'FE') ? "`published`='1' AND " : "") . "
 				`id`=?")
 			->limit(1)
 			->execute($this->page_teaser_page);
@@ -154,7 +154,11 @@ class PageTeaser extends ContentElement
 
 			if ($objTargetPage->type != 'root')
 			{
-				if (version_compare(VERSION, '2.10', '>') && $GLOBALS['TL_CONFIG']['addLanguageToUrl'])
+				if (version_compare(VERSION, '3.5', '>='))
+				{
+					$link = $this->generateFrontendUrl($objTargetPage->row(), null, null, true);
+				}
+				elseif (version_compare(VERSION, '2.10', '>') && $GLOBALS['TL_CONFIG']['addLanguageToUrl'])
 				{
 					$link .= $this->generateFrontendUrl($objTargetPage->row(), null, $targetRoot['language']);
 				}
@@ -167,18 +171,18 @@ class PageTeaser extends ContentElement
 
 		$this->pageLink = $link;
 
-		$this->import('String');
+//		$this->import('String');
 
 		if (version_compare(VERSION, '2.9', '>'))
 		{
 			// Clean the RTE output
 			if ($objPage->outputFormat == 'xhtml')
 			{
-				$this->text = $this->String->toXhtml($this->text);
+				$this->text = \StringUtil::toXhtml($this->text);
 			}
 			else
 			{
-				$this->text = $this->String->toHtml5($this->text);
+				$this->text =\StringUtil::toHtml5($this->text);
 			}
 		}
 
@@ -238,9 +242,7 @@ class PageTeaser extends ContentElement
 		// Get all pages up to the root page
 		do
 		{
-			$objPages = $this->Database->prepare("SELECT * FROM tl_page WHERE id=?")
-									   ->limit(1)
-									   ->execute($pageId);
+			$objPages = \Database::getInstance()->prepare("SELECT * FROM tl_page WHERE id=?")->limit(1)->execute($pageId);
 
 			$type = $objPages->type;
 			$pageId = $objPages->pid;
