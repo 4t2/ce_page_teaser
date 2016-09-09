@@ -171,8 +171,6 @@ class PageTeaser extends ContentElement
 
 		$this->pageLink = $link;
 
-//		$this->import('String');
-
 		if (version_compare(VERSION, '2.9', '>'))
 		{
 			// Clean the RTE output

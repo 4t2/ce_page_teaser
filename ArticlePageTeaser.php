@@ -66,18 +66,16 @@ class ArticlePageTeaser extends ContentTeaser
 
 			$link = $this->generateFrontendUrl($objArticle->row());
 
-			$this->import('String');
-
 			if (version_compare(VERSION, '2.9', '>'))
 			{
 				// Clean the RTE output
 				if ($objPage->outputFormat == 'xhtml')
 				{
-					$articleTeaser = $this->String->toXhtml($objArticle->teaser);
+					$articleTeaser = \StringUtil::toXhtml($objArticle->teaser);
 				}
 				else
 				{
-					$articleTeaser = $this->String->toHtml5($objArticle->teaser);
+					$articleTeaser = \StringUtil::toHtml5($objArticle->teaser);
 				}
 			}
 			else
